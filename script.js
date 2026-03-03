@@ -109,6 +109,12 @@ fetch("https://api.github.com/users/sparshi15/repos")
       document.getElementById("stars-count").innerText = totalStars;
     }
   });
+    const menu = document.getElementById("mobile-menu");
+const navLinks = document.querySelector(".nav-links");
+
+menu.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
 
   })
 
