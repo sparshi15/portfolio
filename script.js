@@ -57,3 +57,32 @@ tsParticles.load("particles-js", {
     move: { enable: true, speed: 1 }
   }
 });
+// Fetch GitHub Repositories
+fetch("https://api.github.com/users/sparshi15/repos")
+  .then(response => response.json())
+  .then(data => {
+
+    const container = document.getElementById("repo-container");
+
+    // Sort by stars
+    data.sort((a, b) => b.stargazers_count - a.stargazers_count);
+
+    // Show only top 6 repos
+    const topRepos = data.slice(0, 6);
+
+    topRepos.forEach(repo => {
+      const card = document.createElement("div");
+      card.className = "repo-card";
+
+      card.innerHTML = `
+        <h3>${repo.name}</h3>
+        <p>${repo.description || "No description available"}</p>
+        <p>⭐ ${repo.stargazers_count} | 🛠 ${repo.language || "N/A"}</p>
+        <a href="${repo.html_url}" target="_blank">View Repository →</a>
+      `;
+
+      container.appendChild(card);
+    });
+
+  })
+  .catch(error => console.error("Error fetching repos:", error));
