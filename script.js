@@ -83,11 +83,31 @@ fetch("https://api.github.com/users/sparshi15/repos")
 
       container.appendChild(card);
     });
-    fetch("https://api.github.com/users/sparshi15")
+ fetch("https://api.github.com/users/sparshi15")
+  .then(res => {
+    if (!res.ok) throw new Error("API Error");
+    return res.json();
+  })
+  .then(data => {
+    if (data.public_repos !== undefined) {
+      document.getElementById("repo-count").innerText = data.public_repos;
+      document.getElementById("followers-count").innerText = data.followers;
+    }
+  })
+  .catch(err => {
+    console.log("GitHub API error:", err);
+  });
+
+fetch("https://api.github.com/users/sparshi15/repos")
   .then(res => res.json())
   .then(data => {
-    document.getElementById("repo-count").innerText = data.public_repos;
-    document.getElementById("followers-count").innerText = data.followers;
+    if (Array.isArray(data)) {
+      const totalStars = data.reduce(
+        (sum, repo) => sum + repo.stargazers_count,
+        0
+      );
+      document.getElementById("stars-count").innerText = totalStars;
+    }
   });
 
   })
