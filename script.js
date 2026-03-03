@@ -1,102 +1,59 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0a0f1f;
-  color: white;
-  overflow-x: hidden;
-}
+// Typing Effect
+const roles = ["AI & ML Engineer", "Generative AI Developer", "RAG Systems Builder"];
+let i = 0;
+let j = 0;
+let deleting = false;
 
-#particles-js {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
+function type() {
+  const current = roles[i];
+  const element = document.getElementById("typing");
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  background: rgba(17, 24, 39, 0.8);
-  backdrop-filter: blur(10px);
-}
+  if (!deleting) {
+    element.innerHTML = current.substring(0, j++);
+    if (j > current.length) {
+      deleting = true;
+      setTimeout(type, 1000);
+      return;
+    }
+  } else {
+    element.innerHTML = current.substring(0, j--);
+    if (j === 0) {
+      deleting = false;
+      i = (i + 1) % roles.length;
+    }
+  }
 
-.navbar a {
-  color: #00f7ff;
-  text-decoration: none;
+  setTimeout(type, deleting ? 50 : 100);
 }
+type();
 
-.hero {
-  text-align: center;
-  padding: 6rem 2rem;
-}
+// Scroll Reveal
+window.addEventListener("scroll", () => {
+  document.querySelectorAll(".reveal").forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add("active");
+    }
+  });
+});
 
-.hero span {
-  color: #00f7ff;
-}
+// Skill Animation
+window.addEventListener("scroll", () => {
+  document.querySelectorAll(".progress").forEach(bar => {
+    if (bar.getBoundingClientRect().top < window.innerHeight - 100) {
+      if (bar.classList.contains("ml")) bar.style.width = "90%";
+      if (bar.classList.contains("dl")) bar.style.width = "85%";
+      if (bar.classList.contains("nlp")) bar.style.width = "88%";
+      if (bar.classList.contains("rag")) bar.style.width = "92%";
+    }
+  });
+});
 
-.btn {
-  padding: 0.7rem 1.5rem;
-  background: linear-gradient(90deg, #00f7ff, #ff00ff);
-  border-radius: 30px;
-  text-decoration: none;
-  color: black;
-}
-
-.section {
-  padding: 4rem 2rem;
-  text-align: center;
-}
-
-.glass {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(15px);
-  border-radius: 15px;
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 800px;
-}
-
-.card {
-  margin: 1rem auto;
-  padding: 1.5rem;
-}
-
-.card a {
-  color: #00f7ff;
-}
-
-/* Skill Bars */
-.skill {
-  max-width: 600px;
-  margin: 1rem auto;
-  text-align: left;
-}
-
-.bar {
-  background: #111827;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.progress {
-  height: 10px;
-  border-radius: 20px;
-  width: 0;
-}
-
-.ml { background: #00f7ff; }
-.dl { background: #ff00ff; }
-.nlp { background: #00ff88; }
-.rag { background: #ff8800; }
-
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 0.8s;
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
+// Particle Background
+tsParticles.load("particles-js", {
+  particles: {
+    number: { value: 60 },
+    color: { value: "#00f7ff" },
+    links: { enable: true, color: "#00f7ff" },
+    move: { enable: true, speed: 1 }
+  }
+});
