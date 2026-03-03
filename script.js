@@ -85,17 +85,6 @@ fetch("https://api.github.com/users/sparshi15/repos")
     });
 
   })
-  .catch(error => console.error("Error fetching repos:", error));
-fetch("https://api.github.com/users/sparshi15")
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("repo-count").innerText = data.public_repos;
-    document.getElementById("followers-count").innerText = data.followers;
-  });
 
-fetch("https://api.github.com/users/sparshi15/repos")
-  .then(res => res.json())
-  .then(data => {
-    const totalStars = data.reduce((sum, repo) => sum + repo.stargazers_count, 0);
-    document.getElementById("stars-count").innerText = totalStars;
-  });
+
+
