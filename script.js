@@ -83,6 +83,12 @@ fetch("https://api.github.com/users/sparshi15/repos")
 
       container.appendChild(card);
     });
+    fetch("https://api.github.com/users/sparshi15")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("repo-count").innerText = data.public_repos;
+    document.getElementById("followers-count").innerText = data.followers;
+  });
 
   })
 
